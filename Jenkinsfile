@@ -31,14 +31,14 @@ pipeline {
                 bat 'mvn verify'
             }
             post {
-                always {
-                    jacoco(
-                        execPattern:   'target/*.exec',
-                        classPattern:  'target/classes',
-                        sourcePattern: 'src/main/java'
-                    )
-                }
-            }
+    always {
+        step([$class: 'JacocoPublisher',
+            execPattern: '**/target/*.exec',
+            classPattern: '**/target/classes',
+            sourcePattern: '**/src/main/java'
+        ])
+    }
+}
         }
         stage('Archivage') {
             steps {
